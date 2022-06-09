@@ -36,7 +36,6 @@
 		<Item href="mainscript.lua"/>
 	</ScriptFileRefs>
 	
-  <textures href="Widgets/Textures/Textures.xdb#xpointer(/UIRelatedTextures)"/>
   <visObjects href=""/>
  
 <addon_name>UniverseHighlighter</addon_name>
