@@ -2,6 +2,9 @@
 <WidgetForm>
 	<Name>UniverseHighlighter</Name>
 	<Priority>4550</Priority>
+	<Children>
+		<Item href="Templates/Main.xdb#xpointer(/WidgetPanel)"/>
+	</Children>
 	<BackLayer href="" />
 	<FrontLayer href="" />
 	<Placement>

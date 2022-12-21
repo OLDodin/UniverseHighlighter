@@ -4,7 +4,7 @@ local m_disableSystemHighlight = nil
 
 
 function InitConfigForm()
-	local template = createWidget(nil, "Template", "Template")
+	local template = getChild(mainForm, "Template")
 	setTemplateWidget(template)
 	local formWidth = 900
 	local form=createWidget(mainForm, "ConfigForm", "Panel", WIDGET_ALIGN_LOW, WIDGET_ALIGN_LOW, formWidth, 450, 100, 120)

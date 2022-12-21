@@ -13,7 +13,7 @@ Global("WITHOUT_MODE_1", 1)
 Global("ONLY_ALPHA_MODE_2", 1)
 
 function InitHighlightForm()
-	local template = createWidget(nil, "Template", "Template")
+	local template = getChild(mainForm, "Template")
 	setTemplateWidget(template)
 	local formWidth = 300
 	local form=createWidget(mainForm, "HighlightForm", "Panel", WIDGET_ALIGN_LOW, WIDGET_ALIGN_LOW, formWidth, 230, 100, 120)

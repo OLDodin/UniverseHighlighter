@@ -1,4 +1,4 @@
-local m_template = createWidget(nil, "Template", "Template")
+local m_template = getChild(mainForm, "Template")
 
 function GetIndexForWidget(anWidget)
 	local parent = getParent(anWidget)
