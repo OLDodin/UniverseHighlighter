@@ -16,7 +16,6 @@
 		<Item href="Locales/main.lua"/>
 		<Item href="LibDnD.lua"/>
 		<Item href="Utils.lua"/>
-		<Item href="AVL/avl.lua"/>
 		<Item href="AVL/avl_WStr.lua"/>
 		<Item href="slider.lua"/>
 		<Item href="aoPanelSupport.lua"/>

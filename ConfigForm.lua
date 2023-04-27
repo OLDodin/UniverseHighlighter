@@ -29,7 +29,7 @@ function InitConfigForm()
 
 	
 	setText(createWidget(form, "closeMainButton", "Button", WIDGET_ALIGN_HIGH, WIDGET_ALIGN_LOW, 20, 20, 20, 20), "x")
-	DnD:Init(form, form, true)
+	DnD.Init(form, form, true)
 	
 	
 	setLocaleText(createWidget(form, "addPlayerNameButton", "Button", WIDGET_ALIGN_LOW, WIDGET_ALIGN_LOW, 85, 25, 485, 320))

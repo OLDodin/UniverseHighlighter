@@ -56,9 +56,9 @@ end
 function ChangeMainWndVisible()
 	LoadFormSettings()
 	if isVisible(m_configForm) then
-		hide(m_configForm)
+		DnD.HideWdg(m_configForm)
 	else
-		show(m_configForm)
+		DnD.ShowWdg(m_configForm)
 	end
 end
 
@@ -194,7 +194,7 @@ function SaveHighlight(aWdg)
 		GetCurrentSettings().targetSettings = saveObj
 	end
 	
-	swap(getParent(aWdg))
+	DnD.SwapWdg(getParent(aWdg))
 end
 
 function SavePressed()
@@ -266,7 +266,7 @@ function EditUserColorPressed(aWdg)
 	local index = GetIndexForWidget(aWdg) + 1
 	local settings = GetCurrentSettings().userSettings[index]
 	SetHighlightSetting(m_highlightForm, index, settings.useMode1, settings.useMode2, settings.color, settings.color2, WITHOUT_MODE_1) 
-	show(m_highlightForm)
+	DnD.ShowWdg(m_highlightForm)
 	m_currHighlightFormMode = 1
 end
 
@@ -274,14 +274,14 @@ function EditGuildColorPressed(aWdg)
 	local index = GetIndexForWidget(aWdg) + 1
 	local settings = GetCurrentSettings().guildSettings[index]
 	SetHighlightSetting(m_highlightForm, index, settings.useMode1, settings.useMode2, settings.color, settings.color2, WITHOUT_MODE_1) 
-	show(m_highlightForm)
+	DnD.ShowWdg(m_highlightForm)
 	m_currHighlightFormMode = 2
 end 
 
 function EditTargetColorPressed()
 	local settings = GetCurrentSettings().targetSettings
 	SetHighlightSetting(m_highlightForm, 0, settings.useMode1, settings.useMode2, settings.color, settings.color2) 
-	show(m_highlightForm)
+	DnD.ShowWdg(m_highlightForm)
 	m_currHighlightFormMode = 3
 end
 
@@ -333,10 +333,12 @@ end
 
 function Init()
 	ChangeClientSettings()
-		
+	m_template = getChild(mainForm, "Template")
+	setTemplateWidget(m_template)
+	
 	local button=createWidget(mainForm, "UHButton", "Button", WIDGET_ALIGN_LOW, WIDGET_ALIGN_LOW, 25, 25, 300, 120)
 	setText(button, "UH")
-	DnD:Init(button, button, true)
+	DnD.Init(button, button, true)
 	
 	common.RegisterReactionHandler( RightClick, "RIGHT_CLICK" )
 	common.RegisterReactionHandler(ButtonPressed, "execute")
@@ -350,7 +352,7 @@ function Init()
 	
 	AddReaction("UHButton", function () ChangeMainWndVisible() end)
 	AddReaction("closeMainButton", function (aWdg) ChangeMainWndVisible() end)
-	AddReaction("closeButton", function (aWdg) swap(getParent(aWdg)) end)
+	AddReaction("closeButton", function (aWdg) DnD.SwapWdg(getParent(aWdg)) end)
 	AddReaction("colorMode1Btn", ShowColorMode1Pressed)
 	AddReaction("colorMode2Btn", ShowColorMode2Pressed)
 	AddReaction("saveBtn", SavePressed)
@@ -367,9 +369,9 @@ function Init()
 	local systemAddonStateChanged = false
 	local targetSelectionLoaded = false
 	local addons = common.GetStateManagedAddons()
-	for i = 0, GetTableSize( addons ) - 1 do
+	for i = 0, GetTableSize( addons ) do
 		local info = addons[i]
-		if  info.name == "TargetSelection" then
+		if info and info.name == "TargetSelection" then
 			if info.isLoaded then
 				targetSelectionLoaded = true
 			end
@@ -385,9 +387,9 @@ function Init()
 	end
 	
 	if systemAddonStateChanged then
-		for i = 0, GetTableSize( addons ) - 1 do
+		for i = 0, GetTableSize( addons ) do
 			local info = addons[i]
-			if  string.find(info.name, "AOPanelMod") then
+			if info and string.find(info.name, "AOPanel") then
 				if info.isLoaded then
 					common.StateUnloadManagedAddon( info.name )
 					common.StateLoadManagedAddon( info.name )

@@ -8,7 +8,7 @@ function onAOPanelStart( params )
 		userMods.SendEvent( "AOPANEL_SEND_ADDON",
 			{ name = common.GetAddonName(), sysName = common.GetAddonName(), param = params } )
 
-		hide(getChild(mainForm, "UHButton"))
+		DnD.HideWdg(getChild(mainForm, "UHButton"))
 	end
 end
 
@@ -22,14 +22,14 @@ function onAOPanelRightClick( params )
 	if params.sender == common.GetAddonName() then
 		local SetVal = { val = userMods.ToWString( "UH" )}
 		userMods.SendEvent( "AOPANEL_UPDATE_ADDON", { sysName = common.GetAddonName(), header = SetVal } )
-		ChangeSelectedAddons()
+		
 	end
 	
 end
 
 function onAOPanelChange( params )
-	if params.unloading and params.name == "UserAddon/AOPanelMod" then
-		show(getChild(mainForm, "UHButton"))
+	if params.unloading and string.find(params.name, "AOPanel") then
+		DnD.ShowWdg(getChild(mainForm, "UHButton"))
 	end
 end
 
@@ -40,7 +40,7 @@ function enableAOPanelIntegration( enable )
 	if enable then
 		onAOPanelStart()
 	else
-		show(getChild(mainForm, "UHButton"))
+		DnD.ShowWdg(getChild(mainForm, "UHButton"))
 	end
 end
 
