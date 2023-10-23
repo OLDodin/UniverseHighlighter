@@ -80,16 +80,25 @@ function UpdateTableValuesFromContainer(aTable, aForm, aContainer)
 	end
 	for i, j in ipairs(aTable) do
 		j.name=getText(getChild(container, "Name"..tostring(i), true))
+		j.nameLowerStr = toLowerString(j.name)
 	end
+end
+
+function AddElementFromFormWithText(aTable, aForm, aText, aContainer)
+	local text = aText
+	local textLowerStr = toLowerString(text)
+	if not aTable or not text or text:IsEmpty() then 
+		return false 
+	end
+	table.insert(aTable, { name=text, nameLowerStr=textLowerStr } )
+	ShowValuesFromTable(aTable, aForm, aContainer)
+	return true
 end
 
 function AddElementFromForm(aTable, aForm, aTextedit, aContainer)
 	if not aTextedit then aTextedit="EditLine1" end
 	local text = getText(getChild(aForm, aTextedit))
-	local textLowerStr = toLowerString(text)
-	if not aTable or not text or common.IsEmptyWString(text) then 
-		return nil 
-	end
-	table.insert(aTable, { name=text, nameLowerStr=textLowerStr } )
-	ShowValuesFromTable(aTable, aForm, aContainer)
+	local res = AddElementFromFormWithText(aTable, aForm, text, aContainer)
+	setText(getChild(aForm, aTextedit), "")
+	return res
 end

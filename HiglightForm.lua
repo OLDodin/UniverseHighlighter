@@ -107,7 +107,7 @@ function ShowColorPressed(aColor)
 		destroy(m_colorForm)
 	end
 	m_colorForm = CreateColorSettingsForm(aColor)
-	show(m_colorForm)
+	DnD.ShowWdg(m_colorForm)
 end
 
 function ColorMode1Changed(aWdg)

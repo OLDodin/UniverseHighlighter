@@ -30,24 +30,35 @@ local m_classColors={
 }
 
 
-function AddReaction(name, func)
-	if not m_reactions then m_reactions={} end
-	m_reactions[name]=func
+function AddReaction(aName, aFunc)
+	if not m_reactions then
+		m_reactions = {} 
+	end
+	m_reactions[aName] = aFunc
 end
 
-function RunReaction(widget)
-	local name=getName(widget)
+local function RunReaction(anWidget)
+	local name=getName(anWidget)
 	if name == "GetModeBtn" then
-		name=getName(getParent(widget))
+		name=getName(getParent(anWidget))
 	end
 	if not name or not m_reactions or not m_reactions[name] then return end
-	m_reactions[name](widget)
+	m_reactions[name](anWidget)
 end
 
 function ButtonPressed(aParams)
 	RunReaction(aParams.widget)
+end
+
+function CheckBoxChangedOn(aParams)
+	changeCheckBox(aParams.widget)
+	ButtonPressed(aParams)
+end
+
+function CheckBoxChangedOff(aParams)
 	changeCheckBox(aParams.widget)
 end
+
 
 function RightClick(params)
 
@@ -97,7 +108,7 @@ function GetColorByObjID(anObjID)
 	end
 	if unit.IsPlayer(anObjID) then
 		local guildInfo = unit.GetGuildInfo(anObjID)
-		if not m_avlGuildTree:isEmpty() and guildInfo and guildInfo.name and not common.IsEmptyWString(guildInfo.name)  then
+		if not m_avlGuildTree:isEmpty() and guildInfo and guildInfo.name and not guildInfo.name:IsEmpty() then
 			local searchRes = m_avlGuildTree:get(guildInfo)
 			if searchRes ~= nil then
 				return GetCurrentSettings().guildSettings[searchRes.index]
@@ -331,6 +342,10 @@ function ChangeClientSettings()
 	end
 end
 
+local function EditLineEsc(aParams)
+	aParams.widget:SetFocus(false)
+end
+
 function Init()
 	ChangeClientSettings()
 	m_template = getChild(mainForm, "Template")
@@ -342,9 +357,12 @@ function Init()
 	
 	common.RegisterReactionHandler( RightClick, "RIGHT_CLICK" )
 	common.RegisterReactionHandler(ButtonPressed, "execute")
+	common.RegisterReactionHandler(CheckBoxChangedOn, "CheckBoxChangedOn")
+	common.RegisterReactionHandler(CheckBoxChangedOff, "CheckBoxChangedOff")
 	common.RegisterEventHandler( OnTargetChaged, "EVENT_AVATAR_TARGET_CHANGED")
 	common.RegisterEventHandler(OnUnitChanged, "EVENT_UNITS_CHANGED")
 	common.RegisterEventHandler(OnEventSecondTimer, "EVENT_SECOND_TIMER")
+	common.RegisterReactionHandler(EditLineEsc, "EditLineEsc")
 	
 	m_configForm = InitConfigForm()
 	m_highlightForm = InitHighlightForm()
