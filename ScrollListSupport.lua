@@ -1,17 +1,5 @@
 local m_template = getChild(mainForm, "Template")
 
-function GetIndexForWidget(anWidget)
-	local parent = getParent(anWidget)
-	local container = getParent(getParent(getParent(parent)))
-	if not parent or not container then 
-		return nil
-	end
-	local index = nil
-	for i=0, container:GetElementCount() do
-		if equals(anWidget, getChild(container:At(i), getName(anWidget), true)) then index=i end
-	end
-	return index
-end
 
 function GenerateWidgetForTable(aTable, aContainer, anIndex)
 	setTemplateWidget(m_template)
@@ -36,69 +24,4 @@ function GenerateWidgetForTable(aTable, aContainer, anIndex)
 	return panel
 end
 
-function ShowValuesFromTable(aTable, aForm, aContainer)
-	local container = aContainer
-	if not aContainer then 
-		container = getChild(aForm, "container") 
-	end
-
-	if not aTable or not container then 
-		return nil 
-	end
-	
-	if container.RemoveItems then 
-		container:RemoveItems() 
-	end
-	for i, element in ipairs(aTable) do
-		if container.PushBack then
-			local widget=GenerateWidgetForTable(element, container, i)
-			if widget then 
-				container:PushBack(widget) 
-			end
-		end
-	end
-end
-
-function DeleteContainer(aTable, anWidget, aForm)
-	local parent = getParent(anWidget)
-	local container = getParent(getParent(getParent(parent)))
-	local index = GetIndexForWidget(anWidget)
-	if container and index and aTable then
-		container:RemoveAt(index)
-		table.remove(aTable, index+1)
-	end
-	ShowValuesFromTable(aTable, aForm, container)
-end
-
-function UpdateTableValuesFromContainer(aTable, aForm, aContainer)
-	local container = aContainer
-	if not aContainer then 
-		container = getChild(aForm, "container") 
-	end
-	if not container or not aTable then 
-		return nil 
-	end
-	for i, j in ipairs(aTable) do
-		j.name=getText(getChild(container, "Name"..tostring(i), true))
-		j.nameLowerStr = toLowerString(j.name)
-	end
-end
-
-function AddElementFromFormWithText(aTable, aForm, aText, aContainer)
-	local text = aText
-	local textLowerStr = toLowerString(text)
-	if not aTable or not text or text:IsEmpty() then 
-		return false 
-	end
-	table.insert(aTable, { name=text, nameLowerStr=textLowerStr } )
-	ShowValuesFromTable(aTable, aForm, aContainer)
-	return true
-end
-
-function AddElementFromForm(aTable, aForm, aTextedit, aContainer)
-	if not aTextedit then aTextedit="EditLine1" end
-	local text = getText(getChild(aForm, aTextedit))
-	local res = AddElementFromFormWithText(aTable, aForm, text, aContainer)
-	setText(getChild(aForm, aTextedit), "")
-	return res
-end
+SetGenerateWidgetForContainerFunc(GenerateWidgetForTable)

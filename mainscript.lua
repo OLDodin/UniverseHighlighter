@@ -1,5 +1,5 @@
 
-local m_reactions={}
+
 local m_configForm = nil
 local m_highlightForm = nil
 
@@ -30,39 +30,6 @@ local m_classColors={
 }
 
 
-function AddReaction(aName, aFunc)
-	if not m_reactions then
-		m_reactions = {} 
-	end
-	m_reactions[aName] = aFunc
-end
-
-local function RunReaction(anWidget)
-	local name=getName(anWidget)
-	if name == "GetModeBtn" then
-		name=getName(getParent(anWidget))
-	end
-	if not name or not m_reactions or not m_reactions[name] then return end
-	m_reactions[name](anWidget)
-end
-
-function ButtonPressed(aParams)
-	RunReaction(aParams.widget)
-end
-
-function CheckBoxChangedOn(aParams)
-	changeCheckBox(aParams.widget)
-	ButtonPressed(aParams)
-end
-
-function CheckBoxChangedOff(aParams)
-	changeCheckBox(aParams.widget)
-end
-
-
-function RightClick(params)
-
-end
 
 function ChangeMainWndVisible()
 	LoadFormSettings()
@@ -262,13 +229,13 @@ function InitDefaultColor(anArr)
 end
 
 function AddPlayerPressed()
-	AddElementFromForm(GetCurrentSettings().userSettings, m_configForm, "EditLine1", getChild(m_configForm, "containerPlayer") ) 
-	
+	AddElementFromForm(GetCurrentSettings().userSettings, m_configForm, getChild(m_configForm, "containerPlayer") ) 
+
 	InitDefaultColor(GetCurrentSettings().userSettings)
 end
 
 function AddGuildPressed()
-	AddElementFromForm(GetCurrentSettings().guildSettings, m_configForm, "EditLine2", getChild(m_configForm, "containerGuild"))
+	AddElementFromForm(GetCurrentSettings().guildSettings, m_configForm, getChild(m_configForm, "containerGuild"))
 	
 	InitDefaultColor(GetCurrentSettings().guildSettings)
 end
@@ -355,7 +322,6 @@ function Init()
 	setText(button, "UH")
 	DnD.Init(button, button, true)
 	
-	common.RegisterReactionHandler( RightClick, "RIGHT_CLICK" )
 	common.RegisterReactionHandler(ButtonPressed, "execute")
 	common.RegisterReactionHandler(CheckBoxChangedOn, "CheckBoxChangedOn")
 	common.RegisterReactionHandler(CheckBoxChangedOff, "CheckBoxChangedOff")

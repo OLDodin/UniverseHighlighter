@@ -32,13 +32,11 @@ function InitConfigForm()
 	DnD.Init(form, form, true)
 	
 	
-	setLocaleText(createWidget(form, "addPlayerNameButton", "Button", WIDGET_ALIGN_LOW, WIDGET_ALIGN_LOW, 85, 25, 485, 320))
-	createWidget(form, "EditLine1", "EditLine", nil, nil, 180, 25, 300, 320)
+	setLocaleText(createWidget(form, "addPlayerNameButton", "Button", WIDGET_ALIGN_LOW, WIDGET_ALIGN_LOW, 260, 25, 310, 320))
 	createWidget(form, "containerPlayer", "ScrollableContainer", WIDGET_ALIGN_LOW, WIDGET_ALIGN_LOW, 280, 270, 300, 50)
 	
 	
-	setLocaleText(createWidget(form, "addGuildNameButton", "Button", WIDGET_ALIGN_LOW, WIDGET_ALIGN_LOW, 85, 25, 785, 320))
-	createWidget(form, "EditLine2", "EditLine", nil, nil, 180, 25, 600, 320)
+	setLocaleText(createWidget(form, "addGuildNameButton", "Button", WIDGET_ALIGN_LOW, WIDGET_ALIGN_LOW, 260, 25, 610, 320))
 	createWidget(form, "containerGuild", "ScrollableContainer", WIDGET_ALIGN_LOW, WIDGET_ALIGN_LOW, 280, 270, 600, 50)
 	
 	return form

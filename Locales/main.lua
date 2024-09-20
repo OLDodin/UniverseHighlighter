@@ -32,6 +32,7 @@ Locales["rus"]["addGuildNameButton"]="Добавить"
 Locales["rus"]["useTargetHighlight"]=" "
 Locales["rus"]["useClassHighlight"]="Подсветка классов"
 Locales["rus"]["infoTxt"]="Приоритет подсветки - 1) Ваша цель 2) Из списка игроков 3) Из списка гильдий 4) По классам"
+Locales["rus"]["enterName"]=userMods.ToWString("Введите имя")
 
 --------------------------------------------------------------------------------
 -- English
