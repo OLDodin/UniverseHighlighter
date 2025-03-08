@@ -1,4 +1,4 @@
-local IsAOPanelEnabled = GetConfig( "EnableAOPanel" ) or GetConfig( "EnableAOPanel" ) == nil
+local IsAOPanelEnabled = true
 
 function onAOPanelStart( params )
 	if IsAOPanelEnabled then
@@ -33,16 +33,6 @@ function onAOPanelChange( params )
 	end
 end
 
-function enableAOPanelIntegration( enable )
-	IsAOPanelEnabled = enable
-	SetConfig( "EnableAOPanel", enable )
-
-	if enable then
-		onAOPanelStart()
-	else
-		DnD.ShowWdg(getChild(mainForm, "UHButton"))
-	end
-end
 
 function AoPanelSupportInit()
 	common.RegisterEventHandler( onAOPanelStart, "AOPANEL_START" )

@@ -4,7 +4,6 @@ local m_configForm = nil
 local m_highlightForm = nil
 
 local m_tickCnt = 0
-local m_template = nil
 local m_highlightObjID = nil
 local m_underMouseObjID = nil
 local m_needRestoreHighlightByCursor = false
@@ -244,6 +243,7 @@ function EditUserColorPressed(aWdg)
 	local index = GetIndexForWidget(aWdg) + 1
 	local settings = GetCurrentSettings().userSettings[index]
 	SetHighlightSetting(m_highlightForm, index, settings.useMode1, settings.useMode2, settings.color, settings.color2, WITHOUT_MODE_1) 
+	setText(getChild(m_highlightForm, "header"), getLocale()["header2"])
 	DnD.ShowWdg(m_highlightForm)
 	m_currHighlightFormMode = 1
 end
@@ -252,6 +252,7 @@ function EditGuildColorPressed(aWdg)
 	local index = GetIndexForWidget(aWdg) + 1
 	local settings = GetCurrentSettings().guildSettings[index]
 	SetHighlightSetting(m_highlightForm, index, settings.useMode1, settings.useMode2, settings.color, settings.color2, WITHOUT_MODE_1) 
+	setText(getChild(m_highlightForm, "header"), getLocale()["header3"])
 	DnD.ShowWdg(m_highlightForm)
 	m_currHighlightFormMode = 2
 end 
@@ -259,6 +260,7 @@ end
 function EditTargetColorPressed()
 	local settings = GetCurrentSettings().targetSettings
 	SetHighlightSetting(m_highlightForm, 0, settings.useMode1, settings.useMode2, settings.color, settings.color2) 
+	setText(getChild(m_highlightForm, "header"), getLocale()["colorTargetBtn"])
 	DnD.ShowWdg(m_highlightForm)
 	m_currHighlightFormMode = 3
 end
@@ -315,8 +317,7 @@ end
 
 function Init()
 	ChangeClientSettings()
-	m_template = getChild(mainForm, "Template")
-	setTemplateWidget(m_template)
+	setTemplateWidget("common")
 	
 	local button=createWidget(mainForm, "UHButton", "Button", WIDGET_ALIGN_LOW, WIDGET_ALIGN_LOW, 25, 25, 300, 120)
 	setText(button, "UH")

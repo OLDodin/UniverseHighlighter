@@ -13,8 +13,7 @@ Global("WITHOUT_MODE_1", 1)
 Global("ONLY_ALPHA_MODE_2", 1)
 
 function InitHighlightForm()
-	local template = getChild(mainForm, "Template")
-	setTemplateWidget(template)
+	setTemplateWidget("common")
 	local formWidth = 300
 	local form=createWidget(mainForm, "HighlightForm", "Panel", WIDGET_ALIGN_LOW, WIDGET_ALIGN_LOW, formWidth, 230, 100, 120)
 	priority(form, 2500)
@@ -24,7 +23,7 @@ function InitHighlightForm()
 	local btnWidth = 100
 	
 	setLocaleText(createWidget(form, "saveHighlightBtn", "Button", WIDGET_ALIGN_HIGH, WIDGET_ALIGN_HIGH, btnWidth, 25, formWidth/2-btnWidth/2, 20))
-	setLocaleText(createWidget(form, "header", "TextView", nil, nil, 140, 25, 20, 20))
+	setLocaleText(createWidget(form, "header", "TextView", nil, nil, 150, 25, 20, 20))
 
 	
 	setLocaleText(createWidget(form, "colorMode1Btn", "Button", nil, nil, 80, 25, 10, 92))
@@ -104,7 +103,7 @@ end
 function ShowColorPressed(aColor)
 	if m_colorForm then
 		DnD.Remove(m_colorForm)
-		destroy(m_colorForm)
+		DestroyColorPanel(m_colorForm)
 	end
 	m_colorForm = CreateColorSettingsForm(aColor)
 	DnD.ShowWdg(m_colorForm)

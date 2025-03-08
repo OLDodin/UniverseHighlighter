@@ -4,8 +4,7 @@ local m_disableSystemHighlight = nil
 
 
 function InitConfigForm()
-	local template = getChild(mainForm, "Template")
-	setTemplateWidget(template)
+	setTemplateWidget("common")
 	local formWidth = 900
 	local form=createWidget(mainForm, "ConfigForm", "Panel", WIDGET_ALIGN_LOW, WIDGET_ALIGN_LOW, formWidth, 450, 100, 120)
 	priority(form, 2500)
@@ -15,13 +14,15 @@ function InitConfigForm()
 	local btnWidth = 100
 	
 	setLocaleText(createWidget(form, "saveBtn", "Button", WIDGET_ALIGN_HIGH, WIDGET_ALIGN_HIGH, btnWidth, 25, formWidth/2-btnWidth/2, 20))
-	setLocaleText(createWidget(form, "header1", "TextView", nil, nil, 140, 25, 20, 20))
-	setLocaleText(createWidget(form, "header2", "TextView", nil, nil, 140, 25, 350, 20))
-	setLocaleText(createWidget(form, "header3", "TextView", nil, nil, 140, 25, 650, 20))
+	setLocaleText(createWidget(form, "header1", "TextView", nil, nil, 150, 25, 20, 20))
+	setLocaleText(createWidget(form, "header2", "TextView", nil, nil, 150, 25, 350, 20))
+	setLocaleText(createWidget(form, "header3", "TextView", nil, nil, 150, 25, 650, 20))
 
 	setLocaleText(createWidget(form, "infoTxt", "TextView", nil, WIDGET_ALIGN_HIGH, formWidth-60, 25, 30, 50))
 	
-	setLocaleText(createWidget(form, "colorTargetBtn", "Button", nil, nil, 130, 25, 10, 135))
+	local targetBtn = createWidget(form, "colorTargetBtn", "Button", nil, nil, 130, 25, 10, 135)
+	setLocaleText(targetBtn)
+	priority(targetBtn, 500)
 			
 	m_useTargetHighlight = createWidget(form, "useTargetHighlight", "CheckBox", WIDGET_ALIGN_LOW, WIDGET_ALIGN_LOW, 250, 25, 10, 135)
 	m_useClassHighlight = createWidget(form, "useClassHighlight", "CheckBox", WIDGET_ALIGN_LOW, WIDGET_ALIGN_LOW, 250, 25, 10, 110)
