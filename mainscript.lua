@@ -144,9 +144,9 @@ function CheckAllUnits()
 end
 
 function OnUnitChanged(aParams)
-	for i=0, GetTableSize(aParams.spawned)-1 do
-		if aParams.spawned[i] then
-			Higlight(aParams.spawned[i])
+	for _, spawnedID in ipairs(aParams.spawned) do
+		if spawnedID then
+			Higlight(spawnedID)
 		end
 	end
 end
@@ -189,8 +189,7 @@ function SavePressed()
 	SaveSettings()
 	ClearAllHighlight()
 	
-	common.StateUnloadManagedAddon( "UserAddon/UniverseHighlighter" )
-	common.StateLoadManagedAddon( "UserAddon/UniverseHighlighter" )
+	common.StateReloadManagedAddon(common.GetAddonSysName())
 end
 
 function LoadFormSettings()
@@ -319,7 +318,7 @@ function Init()
 	ChangeClientSettings()
 	setTemplateWidget("common")
 	
-	local button=createWidget(mainForm, "UHButton", "Button", WIDGET_ALIGN_LOW, WIDGET_ALIGN_LOW, 25, 25, 300, 120)
+	local button=createWidget(mainForm, "UHButton", "Button", WIDGET_ALIGN_LOW, WIDGET_ALIGN_LOW, 32, 32, 300, 120)
 	setText(button, "UH")
 	DnD.Init(button, button, true)
 	
@@ -370,19 +369,7 @@ function Init()
 		common.RegisterEventHandler( OnEventIngameUnderCursorChanged, "EVENT_INGAME_UNDER_CURSOR_CHANGED")
 		systemAddonStateChanged = not targetSelectionLoaded
 	end
-	
-	if systemAddonStateChanged then
-		for i = 0, GetTableSize( addons ) do
-			local info = addons[i]
-			if info and string.find(info.name, "AOPanel") then
-				if info.isLoaded then
-					common.StateUnloadManagedAddon( info.name )
-					common.StateLoadManagedAddon( info.name )
-				end
-			end
-		end
-	end
-	
+
 	CheckAllUnits()
 	AoPanelSupportInit()
 end
